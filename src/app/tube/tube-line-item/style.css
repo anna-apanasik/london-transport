@@ -1,0 +1,8 @@
+.stop-points-badge-count {
+    margin: 0 10px;
+}
+
+.stop-points-container {
+    max-height: 350px;
+    overflow: auto;
+}

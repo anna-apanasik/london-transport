@@ -10,7 +10,13 @@ const getLineStatusAction = (value) => ({
     value: value
 });
 
+const getTubeStopPointsAction = (value) => ({
+    type: types.GET_TUBE_STOP_POINTS_BY_ID,
+    value: value
+});
+
 export default {
     getTubeLinesAction,
-    getLineStatusAction
+    getLineStatusAction,
+    getTubeStopPointsAction
 };

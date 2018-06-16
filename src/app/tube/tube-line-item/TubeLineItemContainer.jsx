@@ -3,11 +3,13 @@ import {tubeOperations} from '../duck/index';
 import TubeLineItem from "./TubeLineItem";
 
 const mapStateToProps = state => ({
-    selectedLine: state.tube.selectedLine
+    selectedLine: state.tube.selectedLine,
+    stopPoints: state.tube.stopPoints
 });
 
 const mapDispatchToProps = {
-    getLineStatus: tubeOperations.getLineStatusById
+    getLineStatus: tubeOperations.getLineStatusById,
+    getStopPoints: tubeOperations.getTubeStopPointsById
 };
 
 const TubeLineItemContainer = connect(

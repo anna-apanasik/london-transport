@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
+import './style.css'
 
 class TubeLineItem extends Component {
     constructor(props) {
@@ -10,12 +12,14 @@ class TubeLineItem extends Component {
     }
 
     componentWillMount() {
-        this.props.getLineStatus(this.state.tubeLineId)
+        this.props.getLineStatus(this.state.tubeLineId);
+        this.props.getStopPoints(this.state.tubeLineId);
     }
 
     render() {
         //TODO check ?:, if, return statement
         const line = this.props.selectedLine;
+        const stopPoints = this.props.stopPoints;
         if (Object.keys(line).length !== 0) {
             const lineStatuses = line.lineStatuses.map(item => item.statusSeverityDescription).join(', ');
             const reasons = line.lineStatuses.map(item => item.reason).join(', ');
@@ -38,9 +42,32 @@ class TubeLineItem extends Component {
                             <li className="list-group-item list-group-item-secondary font-weight-bold">
                                 <label> Service types: {serviceTypes}</label>
                             </li>
+                            <li className="list-group-item list-group-item-secondary font-weight-bold "
+                                data-toggle="collapse"
+                                data-target=".stopPoints"
+                                role="button"
+                                aria-expanded="false"
+                                aria-controls="stopPoints">
+                                <label> Stop points
+                                    <span
+                                        className="badge badge-secondary stop-points-badge-count"> {stopPoints.length} </span>
+                                </label>
+                                <div className="collapse stopPoints">
+                                    <div className="card card-body stop-points-container">
+                                        <ul className="list-group list-group-flush">
+                                            {stopPoints.map((item, index) => (
+                                                <Link to={`/tube-lines/${this.state.tubeLineId}/${item.id}`}>
+                                                    <li key={index}
+                                                        className="list-group-item"> {index + 1}. {item.commonName} </li>
+                                                </Link>))}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
                         </ul>
                     </div>
-                </div>)
+                </div>
+            )
         }
         return null;
     }
@@ -61,7 +88,15 @@ TubeLineItem.propTypes = {
                 name: PropTypes.string.isRequired,
             })
         )
-    })
+    }),
+    stopPoints: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            commonName: PropTypes.string.isRequired
+        })
+    ),
+    getTubeLines: PropTypes.func.isRequired,
+    getStopPoints: PropTypes.func.isRequired
 };
 
 export default TubeLineItem;

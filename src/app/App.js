@@ -21,6 +21,7 @@ const App = () => (
 const TubeLines = ({match}) => (
     <div>
         <Route path={`${match.url}/:tubeLineId`} component={TubeLineItemContainer}/>
+        <Route path={`${match.url}/:tubeLineId/:tubeStopPointId`} component={TubeLineItemContainer}/>
         <Route exact path={match.url} component={TubeLinesContainer}/>
     </div>
 );

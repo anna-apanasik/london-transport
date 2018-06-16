@@ -4,6 +4,7 @@ import appConstants from '../../constants';
 
 const getTubeLinesAction = actions.getTubeLinesAction;
 const getLineStatusAction = actions.getLineStatusAction;
+const getTubeStopPoints = actions.getTubeStopPointsAction;
 
 const getTubeLines = () => (dispatch) => {
     request
@@ -29,4 +30,21 @@ const getLineStatusById = (id) => (dispatch) => {
         })
 };
 
-export default {getTubeLines, getLineStatusById};
+const getTubeStopPointsById = (id) => (dispatch) => {
+    request
+        .get(appConstants.UNFIED_API_URL + `/Line/${id}/StopPoints`)
+        .accept('application/json')
+        .then(res => {
+            dispatch(getTubeStopPoints(res.body));
+        })
+        .catch(error => {
+            //TODO error alert
+        })
+
+};
+
+export default {
+    getTubeLines,
+    getLineStatusById,
+    getTubeStopPointsById
+};
