@@ -1,0 +1,3 @@
+const SEARCH_STOP_POINT = 'SEARCH_STOP_POINT';
+
+export default { SEARCH_STOP_POINT };

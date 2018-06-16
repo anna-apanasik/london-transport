@@ -1,0 +1,4 @@
+.results-stop-points-container {
+    max-height: 550px;
+    overflow: auto;
+}

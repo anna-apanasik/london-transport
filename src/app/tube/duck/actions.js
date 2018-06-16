@@ -6,12 +6,12 @@ const getTubeLinesAction = (value) => ({
 });
 
 const getLineStatusAction = (value) => ({
-    type: types.GET_TUBE_LINE_STATUS_BY_ID,
+    type: types.GET_TUBE_LINE_STATUS_BY_LINE_ID,
     value: value
 });
 
 const getTubeStopPointsAction = (value) => ({
-    type: types.GET_TUBE_STOP_POINTS_BY_ID,
+    type: types.GET_TUBE_STOP_POINTS_BY_LINE_ID,
     value: value
 });
 
@@ -20,9 +20,15 @@ const getStopPointByIdAction = (value) => ({
     value: value
 });
 
+const getArrivalPredictionsByStopPointIdAction = (value) => ({
+    type: types.GET_ARRIVAL_PREDICTIONS_BY_STOP_POINT_ID,
+    value: value
+});
+
 export default {
     getTubeLinesAction,
     getLineStatusAction,
     getTubeStopPointsAction,
-    getStopPointByIdAction
+    getStopPointByIdAction,
+    getArrivalPredictionsByStopPointIdAction
 };

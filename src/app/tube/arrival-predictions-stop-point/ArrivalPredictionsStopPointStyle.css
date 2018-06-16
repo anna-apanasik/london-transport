@@ -1,0 +1,8 @@
+.btn-custom-style {
+    margin-left: 10px;
+}
+
+.arrival-predictions-table {
+    max-height: 350px;
+    overflow: auto;
+}

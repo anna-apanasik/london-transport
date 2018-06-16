@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import './style.css'
+import './TubeLineItemStyle.css'
 
 class TubeLineItem extends Component {
     constructor(props) {
@@ -56,7 +56,7 @@ class TubeLineItem extends Component {
                                     <div className="card card-body stop-points-container">
                                         <ul className="list-group list-group-flush">
                                             {stopPoints.map((item, index) => (
-                                                <Link to={`/tube-lines/${this.state.tubeLineId}/${item.id}`}>
+                                                <Link to={`/stop-point/${item.id}`}>
                                                     <li key={index}
                                                         className="list-group-item"> {index + 1}. {item.commonName} </li>
                                                 </Link>))}

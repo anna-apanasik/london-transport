@@ -4,7 +4,8 @@ const INITIAL_STATE = {
     lines: [],
     selectedLine: {},
     stopPoints: [],
-    selectedStopPoint: {}
+    selectedStopPoint: {},
+    arrivalPredictions: []
 };
 
 const tubeReducer = (state = INITIAL_STATE, action) => {
@@ -19,7 +20,7 @@ const tubeReducer = (state = INITIAL_STATE, action) => {
             };
         }
 
-        case types.GET_TUBE_LINE_STATUS_BY_ID: {
+        case types.GET_TUBE_LINE_STATUS_BY_LINE_ID: {
             const {value} = action;
             return {
                 ...state,
@@ -27,7 +28,7 @@ const tubeReducer = (state = INITIAL_STATE, action) => {
             };
         }
 
-        case types.GET_TUBE_STOP_POINTS_BY_ID: {
+        case types.GET_TUBE_STOP_POINTS_BY_LINE_ID: {
             const {value} = action;
             return {
                 ...state,
@@ -40,6 +41,14 @@ const tubeReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 selectedStopPoint: value
+            }
+        }
+
+        case types.GET_ARRIVAL_PREDICTIONS_BY_STOP_POINT_ID: {
+            const {value} = action;
+            return {
+                ...state,
+                arrivalPredictions: value
             }
         }
 

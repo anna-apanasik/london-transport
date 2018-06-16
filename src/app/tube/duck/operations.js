@@ -6,6 +6,7 @@ const getTubeLinesAction = actions.getTubeLinesAction;
 const getLineStatusAction = actions.getLineStatusAction;
 const getTubeStopPointsAction = actions.getTubeStopPointsAction;
 const getStopPointAction = actions.getStopPointByIdAction;
+const getArrivalPredictionsAction = actions.getArrivalPredictionsByStopPointIdAction;
 
 const getTubeLines = () => (dispatch) => {
     request
@@ -57,9 +58,22 @@ const getStopPointById = (id) => (dispatch) => {
 
 };
 
+const getArrivalPredictionsByStopPointId = (id) => (dispatch) => {
+    request
+        .get(appConstants.UNFIED_API_URL + `/StopPoint/${id}/Arrivals`)
+        .accept('application/json')
+        .then(res => {
+            dispatch(getArrivalPredictionsAction(res.body));
+        })
+        .catch(error => {
+            //TODO error alert
+        })
+};
+
 export default {
     getTubeLines,
     getLineStatusById,
     getTubeStopPointsById,
-    getStopPointById
+    getStopPointById,
+    getArrivalPredictionsByStopPointId
 };
