@@ -1,0 +1,4 @@
+.additional-properties-container {
+    max-height: 150px;
+    overflow: auto;
+}

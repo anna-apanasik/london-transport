@@ -3,7 +3,8 @@ import types from './types';
 const INITIAL_STATE = {
     lines: [],
     selectedLine: {},
-    stopPoints: []
+    stopPoints: [],
+    selectedStopPoint: {}
 };
 
 const tubeReducer = (state = INITIAL_STATE, action) => {
@@ -32,6 +33,14 @@ const tubeReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 stopPoints: value
             };
+        }
+
+        case types.GET_STOP_POINT_BY_ID: {
+            const {value} = action;
+            return {
+                ...state,
+                selectedStopPoint: value
+            }
         }
 
         default:

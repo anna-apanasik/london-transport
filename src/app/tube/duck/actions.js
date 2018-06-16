@@ -15,8 +15,14 @@ const getTubeStopPointsAction = (value) => ({
     value: value
 });
 
+const getStopPointByIdAction = (value) => ({
+    type: types.GET_STOP_POINT_BY_ID,
+    value: value
+});
+
 export default {
     getTubeLinesAction,
     getLineStatusAction,
-    getTubeStopPointsAction
+    getTubeStopPointsAction,
+    getStopPointByIdAction
 };

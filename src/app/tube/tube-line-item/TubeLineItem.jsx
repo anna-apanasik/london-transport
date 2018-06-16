@@ -38,14 +38,14 @@ class TubeLineItem extends Component {
                             {reasons ?
                                 <li className="list-group-item list-group-item-secondary font-weight-bold">
                                     <label> Reasons: {reasons}</label>
-                                </li> : null}
+                                </li> :
+                                null}
                             <li className="list-group-item list-group-item-secondary font-weight-bold">
                                 <label> Service types: {serviceTypes}</label>
                             </li>
                             <li className="list-group-item list-group-item-secondary font-weight-bold "
                                 data-toggle="collapse"
                                 data-target=".stopPoints"
-                                role="button"
                                 aria-expanded="false"
                                 aria-controls="stopPoints">
                                 <label> Stop points
