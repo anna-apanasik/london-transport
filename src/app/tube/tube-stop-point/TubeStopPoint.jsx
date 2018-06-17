@@ -1,7 +1,22 @@
 import React, {Component} from 'react'
 import PropTypes from "prop-types";
-import './TubeStopPointStyle.css'
 import ArrivalPredictionsStopPoint from "../arrival-predictions-stop-point/ArrivalPredictionsStopPoint";
+import './TubeStopPointStyle.css'
+
+const propTypes = {
+    selectedStopPoint: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        commonName: PropTypes.string.isRequired,
+        modes: PropTypes.arrayOf(PropTypes.string),
+        status: PropTypes.bool.isRequired,
+        additionalProperties: PropTypes.arrayOf(PropTypes.shape({
+            category: PropTypes.string,
+            key: PropTypes.string,
+            value: PropTypes.string
+        }))
+    }),
+    getStopPointById: PropTypes.func.isRequired
+};
 
 class TubeStopPoint extends Component {
     constructor(props) {
@@ -35,10 +50,13 @@ class TubeStopPoint extends Component {
                                 <div className="collapse additionalProperties">
                                     <div className="card card-body additional-properties-container">
                                         <ul className="list-group list-group-flush">
-                                            {stopPoint.additionalProperties.map((item, index) => item.category === TubeStopPoint.FACILITY_CATEGORY ?
-                                                <li className="list-group-item"
-                                                    key={index}> {item.key} : {item.value} </li> :
-                                                null)}
+                                            {stopPoint.additionalProperties.length !== 0 ?
+                                                stopPoint.additionalProperties.map((item, index) =>
+                                                    item.category === TubeStopPoint.FACILITY_CATEGORY ?
+                                                        <li className="list-group-item"
+                                                            key={index}> {item.key} : {item.value} </li> :
+                                                        null) :
+                                                'Sorry. This stop point does not any have facilities'}
                                         </ul>
                                     </div>
                                 </div>
@@ -58,20 +76,7 @@ class TubeStopPoint extends Component {
     }
 }
 
-TubeStopPoint.propTypes = {
-    selectedStopPoint: PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        commonName: PropTypes.string.isRequired,
-        modes: PropTypes.arrayOf(PropTypes.string),
-        status: PropTypes.bool.isRequired,
-        additionalProperties: PropTypes.arrayOf(PropTypes.shape({
-            category: PropTypes.string,
-            key: PropTypes.string,
-            value: PropTypes.string
-        }))
-    }),
-    getStopPointById: PropTypes.func.isRequired
-};
+TubeStopPoint.propTypes = propTypes;
 
 TubeStopPoint.FACILITY_CATEGORY = 'Facility';
 

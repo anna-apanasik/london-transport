@@ -3,6 +3,32 @@ import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import './TubeLineItemStyle.css'
 
+const propTypes = {
+    selectedLine: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        modeName: PropTypes.string.isRequired,
+        lineStatuses: PropTypes.arrayOf(
+            PropTypes.shape({
+                statusSeverityDescription: PropTypes.string.isRequired,
+                reason: PropTypes.string,
+            })
+        ),
+        serviceTypes: PropTypes.arrayOf(
+            PropTypes.shape({
+                name: PropTypes.string.isRequired,
+            })
+        )
+    }),
+    stopPoints: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            commonName: PropTypes.string.isRequired
+        })
+    ),
+    getTubeLines: PropTypes.func.isRequired,
+    getStopPoints: PropTypes.func.isRequired
+};
+
 class TubeLineItem extends Component {
     constructor(props) {
         super(props);
@@ -17,7 +43,6 @@ class TubeLineItem extends Component {
     }
 
     render() {
-        //TODO check ?:, if, return statement
         const line = this.props.selectedLine;
         const stopPoints = this.props.stopPoints;
         if (Object.keys(line).length !== 0) {
@@ -57,7 +82,7 @@ class TubeLineItem extends Component {
                                         <ul className="list-group list-group-flush">
                                             {stopPoints.map((item, index) => (
                                                 <Link to={`/stop-point/${item.id}`}>
-                                                    <li key={index}
+                                                    <li key={item.id}
                                                         className="list-group-item"> {index + 1}. {item.commonName} </li>
                                                 </Link>))}
                                         </ul>
@@ -73,30 +98,6 @@ class TubeLineItem extends Component {
     }
 }
 
-TubeLineItem.propTypes = {
-    selectedLine: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        modeName: PropTypes.string.isRequired,
-        lineStatuses: PropTypes.arrayOf(
-            PropTypes.shape({
-                statusSeverityDescription: PropTypes.string.isRequired,
-                reason: PropTypes.string,
-            })
-        ),
-        serviceTypes: PropTypes.arrayOf(
-            PropTypes.shape({
-                name: PropTypes.string.isRequired,
-            })
-        )
-    }),
-    stopPoints: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            commonName: PropTypes.string.isRequired
-        })
-    ),
-    getTubeLines: PropTypes.func.isRequired,
-    getStopPoints: PropTypes.func.isRequired
-};
+TubeLineItem.propTypes = propTypes;
 
 export default TubeLineItem;

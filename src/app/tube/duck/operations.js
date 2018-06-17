@@ -2,18 +2,12 @@ import actions from './actions';
 import * as request from 'superagent';
 import appConstants from '../../constants';
 
-const getTubeLinesAction = actions.getTubeLinesAction;
-const getLineStatusAction = actions.getLineStatusAction;
-const getTubeStopPointsAction = actions.getTubeStopPointsAction;
-const getStopPointAction = actions.getStopPointByIdAction;
-const getArrivalPredictionsAction = actions.getArrivalPredictionsByStopPointIdAction;
-
 const getTubeLines = () => (dispatch) => {
     request
         .get(appConstants.UNFIED_API_URL + '/Line/Mode/tube')
         .accept('application/json')
         .then(res => {
-            dispatch(getTubeLinesAction(res.body))
+            dispatch(actions.getTubeLinesAction(res.body))
         })
         .catch(error => {
             //TODO error alert
@@ -25,7 +19,7 @@ const getLineStatusById = (id) => (dispatch) => {
         .get(appConstants.UNFIED_API_URL + `/Line/${id}/Status`)
         .accept('application/json')
         .then(res => {
-            dispatch(getLineStatusAction(res.body[0]))
+            dispatch(actions.getLineStatusAction(res.body[0]))
         })
         .catch(error => {
             //TODO error alert
@@ -37,7 +31,7 @@ const getTubeStopPointsById = (id) => (dispatch) => {
         .get(appConstants.UNFIED_API_URL + `/Line/${id}/StopPoints`)
         .accept('application/json')
         .then(res => {
-            dispatch(getTubeStopPointsAction(res.body));
+            dispatch(actions.getTubeStopPointsAction(res.body));
         })
         .catch(error => {
             //TODO error alert
@@ -50,7 +44,7 @@ const getStopPointById = (id) => (dispatch) => {
         .get(appConstants.UNFIED_API_URL + `/StopPoint/${id}`)
         .accept('application/json')
         .then(res => {
-            dispatch(getStopPointAction(res.body));
+            dispatch(actions.getStopPointByIdAction(res.body));
         })
         .catch(error => {
             //TODO error alert
@@ -63,7 +57,7 @@ const getArrivalPredictionsByStopPointId = (id) => (dispatch) => {
         .get(appConstants.UNFIED_API_URL + `/StopPoint/${id}/Arrivals`)
         .accept('application/json')
         .then(res => {
-            dispatch(getArrivalPredictionsAction(res.body));
+            dispatch(actions.getArrivalPredictionsByStopPointIdAction(res.body));
         })
         .catch(error => {
             //TODO error alert

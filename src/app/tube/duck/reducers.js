@@ -40,7 +40,8 @@ const tubeReducer = (state = INITIAL_STATE, action) => {
             const {value} = action;
             return {
                 ...state,
-                selectedStopPoint: value
+                selectedStopPoint: value,
+                arrivalPredictions: []
             }
         }
 

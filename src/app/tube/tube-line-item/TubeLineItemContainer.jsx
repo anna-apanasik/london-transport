@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {tubeOperations} from '../duck/index';
+import {tubeOperations} from '../duck';
 import TubeLineItem from "./TubeLineItem";
 
 const mapStateToProps = state => ({

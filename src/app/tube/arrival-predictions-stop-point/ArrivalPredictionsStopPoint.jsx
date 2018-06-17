@@ -2,8 +2,25 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {tubeOperations} from '../duck/index';
 import PropTypes from "prop-types";
-import Collapse from 'react-css-collapse';
 import './ArrivalPredictionsStopPointStyle.css'
+import PredictionTable from "./PredictionTable";
+
+const propTypes = {
+    stopPointId: PropTypes.string.isRequired,
+    mode: PropTypes.string.isRequired,
+    arrivalPredictions: PropTypes.arrayOf(
+        PropTypes.shape({
+            modeName: PropTypes.string.isRequired,
+            platformName: PropTypes.string.isRequired,
+            direction: PropTypes.string.isRequired,
+            destinationName: PropTypes.string.isRequired,
+            currentLocation: PropTypes.string.isRequired,
+            timeToStation: PropTypes.number.isRequired,
+            expectedArrival: PropTypes.string.isRequired
+        })
+    ),
+    getArrivalPredictions: PropTypes.func.isRequired
+};
 
 class ArrivalPredictionsStopPoint extends Component {
     constructor(props) {
@@ -22,7 +39,7 @@ class ArrivalPredictionsStopPoint extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let arrivalPredictions = nextProps.arrivalPredictions.filter(item => item.modeName === nextProps.mode)
+        let arrivalPredictions = nextProps.arrivalPredictions.filter(item => item.modeName === nextProps.mode);
 
         if (arrivalPredictions.length === 0) {
             this.setState({
@@ -47,6 +64,7 @@ class ArrivalPredictionsStopPoint extends Component {
     }
 
     render() {
+        console.log(this.state);
         return (
             <div>
                 <label> Arrival predictions for {this.props.mode}</label>
@@ -71,73 +89,20 @@ class ArrivalPredictionsStopPoint extends Component {
                 </div>
                 <div className="row">
                     <div className="col arrival-predictions-table">
-                        <Collapse isOpen={this.state.isOpenInbound}>
-                            <table className="table">
-                                <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Destination</th>
-                                    <th scope="col">Time to station</th>
-                                    <th scope="col">Platform</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {this.state.inboundDirectionPredictions.map((item, index) =>
-                                    <tr>
-                                        <th scope="row">{index + 1}</th>
-                                        <td>{item.destinationName}</td>
-                                        <td>{Math.floor(item.timeToStation / 60) + ':' + item.timeToStation % 60}</td>
-                                        <td>{item.platformName}</td>
-                                    </tr>)}
-                                </tbody>
-                            </table>
-                        </Collapse>
+                        <PredictionTable
+                            isOpen={this.state.isOpenInbound}
+                            predictions={this.state.inboundDirectionPredictions} />
 
-                        <div className="arrival-predictions-table">
-                            <Collapse isOpen={this.state.isOpenOutbound}>
-                                <table className="table">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Destination</th>
-                                        <th scope="col">Time to station</th>
-                                        <th scope="col">Platform</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {this.state.outboundDirectionPredictions.map((item, index) =>
-                                        <tr>
-                                            <th scope="row">{index + 1}</th>
-                                            <td>{item.destinationName}</td>
-                                            <td>{Math.floor(item.timeToStation / 60) + ':' + item.timeToStation % 60}</td>
-                                            <td>{item.platformName}</td>
-                                        </tr>)}
-                                    </tbody>
-                                </table>
-                            </Collapse>
-                        </div>
+                        <PredictionTable
+                            isOpen={this.state.isOpenOutbound}
+                            predictions={this.state.outboundDirectionPredictions} />
                     </div>
                 </div>
             </div>)
     }
 }
 
-ArrivalPredictionsStopPoint.propTypes = {
-    stopPointId: PropTypes.string.isRequired,
-    mode: PropTypes.string.isRequired,
-    arrivalPredictions: PropTypes.arrayOf(
-        PropTypes.shape({
-            modeName: PropTypes.string.isRequired,
-            platformName: PropTypes.string.isRequired,
-            direction: PropTypes.string.isRequired,
-            destinationName: PropTypes.string.isRequired,
-            currentLocation: PropTypes.string.isRequired,
-            timeToStation: PropTypes.number.isRequired,
-            expectedArrival: PropTypes.string.isRequired
-        })
-    ),
-    getArrivalPredictions: PropTypes.func.isRequired
-};
+ArrivalPredictionsStopPoint.propTypes = propTypes;
 
 ArrivalPredictionsStopPoint.INBOUND_DIRECTION = 'inbound';
 ArrivalPredictionsStopPoint.OUTBOUND_DIRECTION = 'outbound';

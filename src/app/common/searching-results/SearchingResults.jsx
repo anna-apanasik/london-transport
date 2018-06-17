@@ -5,6 +5,21 @@ import {connect} from "react-redux";
 import {commonOperations} from "../duck";
 import './SearchingResultsStyle.css'
 
+const propTypes = {
+    query: PropTypes.string,
+    results: PropTypes.shape({
+        total: PropTypes.number,
+        matches: PropTypes.arrayOf(
+            PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                modes: PropTypes.arrayOf(PropTypes.string.isRequired),
+                name: PropTypes.string.isRequired
+            })
+        )
+    }),
+    searchStopPointByQuery: PropTypes.func.isRequired
+};
+
 class SearchingResults extends Component {
     constructor(props) {
         super(props);
@@ -34,9 +49,9 @@ class SearchingResults extends Component {
                         <h3>Total count: {results.total}</h3>
                         <div className="card results-stop-points-container">
                             <ul className="list-group list-group-flush">
-                                {results.matches.map((item, index) => (
+                                {results.matches.map(item => (
                                     <Link to={`/stop-point/${item.id}`}>
-                                        <li key={index} className="list-group-item"> {item.name} </li>
+                                        <li key={item.id} className="list-group-item"> {item.name} </li>
                                     </Link>))}
                             </ul>
                         </div>
@@ -47,20 +62,7 @@ class SearchingResults extends Component {
     }
 }
 
-SearchingResults.propTypes = {
-    query: PropTypes.string.isRequired,
-    results: PropTypes.shape({
-        total: PropTypes.number.isRequired,
-        matches: PropTypes.arrayOf(
-            PropTypes.shape({
-                id: PropTypes.string.isRequired,
-                modes: PropTypes.arrayOf(PropTypes.string.isRequired),
-                name: PropTypes.string.isRequired
-            })
-        )
-    }),
-    searchStopPointByQuery: PropTypes.func.isRequired
-};
+SearchingResults.propTypes = propTypes;
 
 const mapStateToProps = state => ({
     results: state.common.results
@@ -69,4 +71,5 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     searchStopPointByQuery: commonOperations.searchStopPointByQuery
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(SearchingResults);

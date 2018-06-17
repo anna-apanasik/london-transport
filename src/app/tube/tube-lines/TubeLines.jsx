@@ -2,6 +2,16 @@ import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import PropTypes from 'prop-types';
 
+const propTypes = {
+    lines: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired
+        })
+    ),
+    getTubeLines: PropTypes.func.isRequired
+};
+
 class TubeLines extends Component {
 
     componentWillMount() {
@@ -15,9 +25,9 @@ class TubeLines extends Component {
                     <h1>Tube Lines</h1>
                     <div className="card">
                         <ul className="list-group list-group-flush">
-                            {this.props.lines.map((item, index) => (
+                            {this.props.lines.map(item => (
                                 <Link to={`/tube-lines/${item.id}`}>
-                                    <li key={index} className="list-group-item"> {item.name} </li>
+                                    <li key={item.id} className="list-group-item"> {item.name} </li>
                                 </Link>))}
                         </ul>
                     </div>
@@ -27,14 +37,6 @@ class TubeLines extends Component {
     }
 }
 
-TubeLines.propTypes = {
-    lines: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            name: PropTypes.string.isRequired
-        })
-    ),
-    getTubeLines: PropTypes.func.isRequired
-};
+TubeLines.propTypes = propTypes;
 
 export default TubeLines;
